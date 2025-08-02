@@ -1,0 +1,35 @@
+site_name: python-meteolux
+site_url: https://github.com/sim0nx/python-meteolux
+repo_url: https://github.com/sim0nx/python-meteolux
+
+
+theme:
+  name: "material"
+  font: false
+
+plugins:
+- search
+- mkdocstrings:
+    handlers:
+      python:
+        options:
+          extensions:
+            - griffe_typingdoc
+            - griffe_pydantic:
+                schema: true
+        inventories:
+          - https://docs.pydantic.dev/latest/objects.inv
+
+markdown_extensions:
+  - pymdownx.highlight:
+      linenums: true
+      linenums_style: pymdownx-inline
+  - pymdownx.superfences
+  - admonition
+
+nav:
+  - Home: 'index.md'
+  - API Documentation:
+    - 'async api': 'async_api.md'
+    - 'models': 'models.md'
+    - 'exceptions': 'exceptions.md'
