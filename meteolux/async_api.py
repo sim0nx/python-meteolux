@@ -1,4 +1,5 @@
 """A Python client for the MeteoLux API."""
+
 import typing
 from typing import Any, Optional
 
@@ -23,14 +24,28 @@ class AsyncMeteoLuxClient:
   methods for all available endpoints, returning structured Pydantic models.
   """
 
-  def __init__(self, base_url: str = 'https://metapi.ana.lu/api/v1') -> None:
+  def __init__(
+    self,
+    base_url: str = 'https://metapi.ana.lu/api/v1',
+    session: httpx.AsyncClient | None = None,
+    timeout: int = 10,
+  ) -> None:
     """Initializes the client with the base URL.
 
     Args:
         base_url (str): The base URL for the API.
+        session (httpx.AsyncClient, optional): An optional session to use.
+        timeout (int, optional): The maximum number of seconds to wait before timing out a request.
     """
+    if base_url.endswith('/'):
+      base_url = base_url[:-1]
+
     self.base_url = base_url
-    self.client = httpx.AsyncClient(base_url=self.base_url, timeout=10.0)
+
+    if session is None:
+      self.client = httpx.AsyncClient(timeout=timeout)
+    else:
+      self.client = session
 
   async def _request(self, method: str, endpoint: str, response_model: Optional[Any] = None, **kwargs: Any) -> Any:
     """Internal method to handle all API requests and common error handling.
@@ -49,8 +64,10 @@ class AsyncMeteoLuxClient:
         httpx.HTTPStatusError: If the response status code is another error.
         httpx.RequestError: For network-related issues.
     """
+    _endpoint = f'{self.base_url}{endpoint}'
+
     try:
-      response = await self.client.request(method, endpoint, **kwargs)
+      response = await self.client.request(method, _endpoint, **kwargs)
       response.raise_for_status()
 
       if response.status_code == 204:
