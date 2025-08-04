@@ -253,7 +253,7 @@ class ObservationResponseData(BaseModel):
   """Model to link gendata id to their values."""
 
   id: str
-  value: Union[int, float]
+  value: int | float | None
 
 
 class ObservationResponse(BaseModel):
