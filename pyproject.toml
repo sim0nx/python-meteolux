@@ -49,8 +49,10 @@ dev = [
   "pip",
   "mypy",
   "ruff",
+  "prek>=0.3.4",
 ]
 test = [
+  "coverage>=7.10.7",
   "pytest",
   "pytest-asyncio>=1.1.0",
   "pytest-sugar",

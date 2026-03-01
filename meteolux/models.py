@@ -62,8 +62,8 @@ class HourlyWeather(BaseModel):
   date: datetime
   icon: Icon
   wind: Wind
-  rain: str
-  snow: str
+  rain: str | int
+  snow: str | int
   type: Literal['hourly'] = 'hourly'
   temperature: Temperature
 
@@ -151,7 +151,7 @@ class Ephemeris(BaseModel):
   sunset: str
   moonrise: str
   moonset: str
-  sunshine: str
+  sunshine: int = Field(..., ge=0.0, le=16.0)
   moon_icon: MoonIcon = Field(..., alias='moonIcon')
   uv_index: int = Field(..., alias='uvIndex', ge=0.0, le=12.0)
 
@@ -230,10 +230,10 @@ class ObservationMetadata(BaseModel):
   unit: Literal['m', 'm/s', '%', '1/10 kt', 'degC', 'degrees', 'ft', 'hPa', 'mm']
   category: Literal['Wind', 'Cloud Cover', 'Atmospheric pressure', 'Precipitation', 'Temperature', 'Humidity', 'Visibility']
   performance_category: Literal['A', 'B', 'C', 'D', 'E'] = Field(..., alias='performanceCategory')
-  qualitycode: Literal[0, 1, 2, 3, 4, 5, 6, 7]
-  timeoffsets: Literal['PT0H']
-  timeresolution: Literal['PT1M', 'PT1H']
-  sensorlevels: Optional[SensorLevel] = None
+  qualitycode: Literal[0, 1, 2, 3, 4, 5, 6, 7] = Field(..., alias='qualityCode')
+  timeoffsets: Literal['PT0H'] = Field(..., alias='timeOffsets')
+  timeresolution: Literal['PT1M', 'PT1H'] = Field(..., alias='timeResolution')
+  sensorlevels: Optional[SensorLevel] = Field(..., alias='sensorLevels')
 
 
 class ObservationMetadataResponse(BaseModel):
