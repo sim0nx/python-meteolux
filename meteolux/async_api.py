@@ -1,7 +1,7 @@
 """A Python client for the MeteoLux API."""
 
 import typing
-from typing import Any, Optional
+from typing import Any
 
 import httpx
 
@@ -47,7 +47,7 @@ class AsyncMeteoLuxClient:
     else:
       self.client = session
 
-  async def _request(self, method: str, endpoint: str, response_model: Optional[Any] = None, **kwargs: Any) -> Any:
+  async def _request(self, method: str, endpoint: str, response_model: Any | None = None, **kwargs: Any) -> Any:
     """Internal method to handle all API requests and common error handling.
 
     Args:
@@ -150,7 +150,7 @@ class AsyncMeteoLuxClient:
 
   # --- MetApp Endpoints ---
 
-  async def get_weather(self, langcode: str = 'fr', city: Optional[int] = None, lat: Optional[float] = None, long: Optional[float] = None) -> WeatherResponse:
+  async def get_weather(self, langcode: str = 'fr', city: int | None = None, lat: float | None = None, long: float | None = None) -> WeatherResponse:
     """Get weather for a city/language or lat/long.
 
     Corresponds to GET /metapp/weather.
@@ -185,7 +185,7 @@ class AsyncMeteoLuxClient:
     endpoint = '/metapp/user'
     await self._request('POST', endpoint, json=user_data.model_dump(by_alias=True))
 
-  async def get_bookmarks(self, langcode: str = 'fr', lat: Optional[float] = None, long: Optional[float] = None) -> Bookmarks:
+  async def get_bookmarks(self, langcode: str = 'fr', lat: float | None = None, long: float | None = None) -> Bookmarks:
     """Return all cities and the closest one if lat/long are given.
 
     Corresponds to GET /metapp/bookmarks.

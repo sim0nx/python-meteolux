@@ -13,14 +13,11 @@ classifiers = [
   "Intended Audience :: Developers",
   "Operating System :: OS Independent",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.9",
-  "Programming Language :: Python :: 3.10",
-  "Programming Language :: Python :: 3.11",
-  "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
 ]
 keywords = ["MeteoLux"]
-requires-python = ">=3.9"
+requires-python = ">=3.13"
 dependencies = [
   "httpx",
   "pydantic",
@@ -46,7 +43,6 @@ docs = [
   "griffe-pydantic",
 ]
 dev = [
-  "pip",
   "mypy",
   "ruff",
   "prek>=0.3.4",
@@ -108,7 +104,7 @@ markers = [
 [tool.ruff]
 line-length = 160
 indent-width = 2
-target-version = "py39"
+target-version = "py313"
 include = [
   "pyproject.toml",
   "meteolux/**/*.py",

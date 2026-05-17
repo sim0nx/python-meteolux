@@ -1,7 +1,7 @@
 """API models."""
 
 from datetime import date, datetime
-from typing import Literal, Optional, Union
+from typing import Literal
 
 from pydantic import BaseModel, Field
 
@@ -18,15 +18,15 @@ class Wind(BaseModel):
 
   direction: str
   speed: str
-  gusts: Optional[str] = None
+  gusts: str | None = None
 
 
 class Temperature(BaseModel):
   """Temperature model."""
 
-  temperature: Union[int, list[int]]
-  humidex: Optional[str] = None
-  felt: Optional[int] = None
+  temperature: int | list[int]
+  humidex: str | None = None
+  felt: int | None = None
 
 
 class CurrentWeather(BaseModel):
@@ -85,7 +85,7 @@ class Climatology(BaseModel):
   max_temp: float = Field(..., alias='maxTemp')
   precipitation: float
   mean_temp: float = Field(..., alias='meanTemp')
-  sunshine: Optional[float] = None
+  sunshine: float | None = None
 
 
 class GraphicalData(BaseModel):
@@ -110,7 +110,7 @@ class Vigilance(BaseModel):
 class RoadStatusItem(BaseModel):
   """Road status item model as per the spec."""
 
-  date: Union[date, list[str]]
+  date: date | list[str]
   description: str
 
 
@@ -200,7 +200,7 @@ class Bookmarks(BaseModel):
   """Bookmarks model."""
 
   cities: list[BookmarkCity]
-  nearest_city: Optional[BookmarkCity] = Field(None, alias='nearestCity')
+  nearest_city: BookmarkCity | None = Field(None, alias='nearestCity')
 
 
 class InObservation(BaseModel):
@@ -233,7 +233,7 @@ class ObservationMetadata(BaseModel):
   qualitycode: Literal[0, 1, 2, 3, 4, 5, 6, 7] = Field(..., alias='qualityCode')
   timeoffsets: Literal['PT0H'] = Field(..., alias='timeOffsets')
   timeresolution: Literal['PT1M', 'PT1H'] = Field(..., alias='timeResolution')
-  sensorlevels: Optional[SensorLevel] = Field(..., alias='sensorLevels')
+  sensorlevels: SensorLevel | None = Field(..., alias='sensorLevels')
 
 
 class ObservationMetadataResponse(BaseModel):
@@ -292,7 +292,7 @@ class VigilanceSettings(BaseModel):
   type_rain: bool = Field(False, alias='typeRain')
   type_snow: bool = Field(False, alias='typeSnow')
   type_storm: bool = Field(False, alias='typeStorm')
-  type_wind: Optional[bool] = Field(None, alias='typeWind')
+  type_wind: bool | None = Field(None, alias='typeWind')
   zone_north: bool = Field(..., alias='zoneNorth')
   zone_south: bool = Field(..., alias='zoneSouth')
 
