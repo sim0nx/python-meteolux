@@ -1,8 +1,8 @@
+import json
 from typing import Any
 
 import httpx
 import pytest
-from pydantic import json
 
 from meteolux.async_api import AsyncMeteoLuxClient
 from meteolux.exceptions import NotFoundError
@@ -12,7 +12,7 @@ from meteolux.models import (
   ObservationMetadataResponse,
   WeatherResponse,
 )
-import json
+
 
 @pytest.mark.asyncio
 async def test_get_atc_report_success(respx_mock) -> None:
